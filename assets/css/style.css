@@ -1,0 +1,352 @@
+:root {
+    --primary-color: rgb(145, 0, 145);
+    --bright-color: rgb(255, 255, 255);
+    --font-color: rgb(64, 64, 64);
+    --background-color: rgb(245, 245, 245);
+
+    --nav-background-primary: rgb(255, 255, 255);
+    --nav-background-secondary: rgb(240, 240, 240);
+    --footer-font-color: rgb(216, 216, 216);
+    --footer-background-color: rgb(17, 17, 17);
+
+    --default-transition: 0.25s;
+}
+
+* {
+    margin: 0; padding: 0; box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--font-color);
+}
+body {
+    background: var(--background-color);
+}
+.btn {
+    width: fit-content; height: fit-content; margin: 0.25rem 0.75rem; padding: 0.25rem 0.75rem;
+    transform: scale(1); transform-origin: center;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    transition: var(--default-transition); cursor: pointer;
+}
+.btn:hover {
+    transform: scale(1.1)
+}
+.btn i, .btn span {
+    font-size: inherit; color: inherit;
+}
+.btn i {
+    margin-right: 0.25rem;
+}
+.btn.solid {
+    border: 0.1rem solid var(--primary-color);
+    color: var(--bright-color); background: var(--primary-color);
+}
+.btn.transparent {
+    border: 0.1rem solid var(--font-color);
+    color: var(--font-color); background: none;
+}
+section {
+    margin: 4.5rem 0; padding: 3rem 10%;
+    display: none;
+}
+section.active {
+    display: block;
+}
+section.first {
+    margin: 4rem 0 4.5rem 0; 
+}
+h3 {
+    padding-bottom: 0.5rem;
+    font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 500; text-align: center;
+    color: var(--primary-color);
+}
+h3 i {
+    color: inherit;
+}
+p {
+    font-size: clamp(0.85rem, 1.5vw, 1.1rem);
+}
+
+/* POPUP */
+.popup-background {
+    width: 100%; height: 100%;
+    position: fixed; top: 0; left: 0; z-index: 10000;
+    opacity: 0; transform: scale(0); transform-origin: center;
+    background: rgba(0, 0, 0, 0.5);
+    transition: var(--default-transition);
+}
+.popup-background.active {
+    opacity: 1; transform: scale(1);
+}
+.popup-overlay {
+    width: 100vw; height: 100vh; z-index: -1000;
+    position: fixed; top: 0; left: 0; overflow-x: hidden; overflow-y: auto;
+    background-color: rgba(0, 0, 0, 0.5); opacity: 0; transform: scaleX(0); transform-origin: left;
+    transition: var(--default-transition); user-select: none;
+}
+.popup-overlay.active {
+    z-index: 10000;
+    opacity: 1; transform: scaleX(1);
+}
+.popup-overlay .popup-box-container {
+    width: 400px; height: fit-content; padding: 0 2rem;
+    position: absolute; top: 20%; left: 50%; transform: translate(-50%);
+    border-radius: 0.75rem;
+    text-align: center;
+    background-color: var(--background-color);
+}
+.popup-overlay .popup-box-container .popup-icon-container i {
+    margin: 2.5rem 0; padding: 0.5rem;
+    font-size: clamp(3.5rem, 4vw, 4.5rem);
+}
+.popup-overlay .popup-box-container .popup-icon-container .fa-circle-check {color: rgb(25, 197, 25)}
+.popup-overlay .popup-box-container .popup-icon-container .fa-circle-exclamation {color: rgb(255, 115, 0)}
+.popup-overlay .popup-box-container .popup-icon-container .fa-circle-xmark {color: rgb(255, 53, 53)}
+.popup-overlay .popup-box-container .popup-message-container span {
+    font-size: clamp(1.75rem, 2vw, 2rem); font-weight: 500;
+}
+.popup-overlay .popup-box-container .popup-message-container p {
+    margin-top: 0.75rem;
+    opacity: 0.75;
+}
+.popup-overlay .popup-box-container .btn {
+    margin: 3.5rem 0.5rem 4.5rem 0.5rem;
+}
+.popup-overlay .popup-box-container .btn.solid {
+    font-size: 120%;
+}
+
+/* HEADER */
+header {
+    width: 100%; height: fit-content;
+    display: block; position: fixed; top: 0%; z-index: 1000;
+}
+header .button-container {
+    width: 100%; height: fit-content; margin: 0 auto;
+    display: flex; flex-direction: row; align-items: center; justify-content: space-around;
+    background: var(--nav-background-primary);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+}
+header .button-container .logo {
+    width: fit-content; height: fit-content; padding: 0.75rem;
+    font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 500; text-decoration: none;
+}
+header .button-container .logo span {
+    color: var(--primary-color); font-weight: 700;
+}
+header .button-container .buttons {
+    width: fit-content; height: fit-content; padding: 0.5rem;
+    display: flex; flex-direction: row; align-items: center; justify-content: center;
+}
+#nav-menu-btn {
+    width: fit-content; height: fit-content;
+    margin: 0.25rem 0.75rem; padding: 1rem 0.5rem;
+    transform: scale(1); transform-origin: center;
+    color: var(--font-color);
+    transition: var(--default-transition); cursor: pointer;
+}
+#nav-menu-btn:hover {
+    color: var(--primary-color);
+    transform: scale(1.1)
+}
+
+header .list-container {
+    width: 100%; height: fit-content; padding: 0.25rem 7.5rem 0.5rem 7.5rem;
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+    transform: scaleY(0); transform-origin: top;
+    background: var(--nav-background-secondary);
+    transition: var(--default-transition);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+}
+header .list-container.active {
+    transform: scaleY(1);
+}
+header .list-container button {
+    width: fit-content; height: fit-content; margin: 0.5rem 1rem 0.75rem 1rem; padding: 0.25rem 0.5rem;
+    border: none;
+    transform: scale(1); transform-origin: center;
+    font-size: clamp(0.75rem, 1.5vw, 1rem);
+    transition: var(--default-transition); cursor: pointer;
+}
+header .list-container button i {
+    color: inherit;
+}
+header .list-container button:hover {
+    transform: scale(1.1); color: var(--primary-color);
+}
+
+/* FOOD PICKER */
+section .header {
+    margin: 0.5rem 0 1rem 0; padding-bottom: 1rem;
+    border-bottom: 0.2rem solid var(--primary-color);
+    border-image: linear-gradient(to right, transparent, var(--primary-color), transparent) 1;
+}
+section .header p {
+    max-width: 60rem; height: auto; margin: 0 auto;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+    /*background: orange;*/
+}
+section .content {
+    width: 100%; height: fit-content; padding: 1rem 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    /*background: yellowgreen;*/
+}
+section .content span {
+    padding: 2rem 0 0.5rem 0;
+    font-size: clamp(1rem, 2vw, 1.5rem); text-align: center;
+}
+#list-result {
+    width: 100%; height: fit-content;
+	padding: 0.5rem 0 5rem 0;
+	font-size: clamp(1.5rem, 3vw, 2.5rem); font-weight: 500;
+}
+section .button-container {
+    width: 100%; height: fit-content; padding: 0.5rem 0;
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+}
+section .button-container .btn {
+	margin-bottom: 0.75rem;
+}
+
+/* FOOD EDITOR & FOOD ADDER */
+section .content.form {
+    max-width: 40rem; height: fit-content; margin: 0 auto;
+}
+section .content.form form {
+    width: 90%; height: fit-content;
+    display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
+}
+section .content.form form label {
+    width: 100%; height: fit-content; padding: 0 0.5rem 0.25rem 0.5rem;
+    font-size: clamp(1rem, 1.25vw, 1.25rem); font-weight: 500;
+}
+section .content.form form input {
+    width: 100%; height: fit-content; padding: 0.5rem 0.5rem; margin: 0.5rem 0 2rem 0;
+    outline: none;
+}
+section .content.form form input.input-name {
+    width: 60%; margin: 0.5rem 0 2rem 0;
+}
+#edit-icon-input, #add-icon-input {
+    width: 100%; height: fit-content; margin: 0.5rem 0 2rem 0;
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-start;
+}
+#edit-icon-input .icon, #add-icon-input .icon {
+    padding: 0.75rem 0.25rem; margin: 0.25rem 0.5rem;
+    transition: var(--default-transition); transform: scale(1); transform-origin: center; cursor: pointer;
+}
+#edit-icon-input .icon:hover, #add-icon-input .icon:hover {
+    transform: scale(1.25); color: var(--primary-color);
+}
+#edit-icon-input .icon.active, #add-icon-input .icon.active {
+    color: var(--primary-color);
+}
+section .content.form form textarea {
+    width: 100%; height: fit-content; margin: 0.5rem 0; padding: 0.5rem 0.5rem;
+    outline: none;
+}
+
+/* FOOTER */
+footer {
+    width: 100%; height: auto; padding-top: 6.5rem;
+    background: var(--footer-background-color);
+}
+.footer-content {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+}
+footer h3 {
+    line-height: 3rem;
+    font-weight: 300;
+    color: var(--footer-font-color);
+}
+footer h3 span {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+footer p {
+    max-width: 50rem; margin: 10px auto; line-height: 1.5rem;
+    font-size: 90%;
+    color: var(--footer-font-color);
+}
+footer p b {
+    font-weight: 500;
+    color: var(--footer-font-color);
+}
+footer p span {
+    font-weight: 700;
+    color: var(--primary-color);
+}
+footer .footer-content .links {
+    margin: 1rem 0 3rem 0;
+    display: flex; align-items: center; justify-content: center;
+    list-style: none;
+}
+footer .footer-content .links li {
+    margin: 0 0.75rem;
+}
+footer .footer-content .links li a {
+    text-decoration: none;
+}
+footer .footer-content .links li a i {
+    transform: scale(1); transform-origin: center;
+    color: var(--footer-font-color);
+    transition: var(--default-transition);
+}
+footer .footer-content .links li a i:hover {
+    transform: scale(1.25);
+    color: var(--primary-color);
+}
+footer .footer-bottom {
+    width: 100%; padding: 0.75rem 0;
+    text-align: center;
+    background: rgb(0, 0, 0);
+}
+footer .footer-bottom p {
+    font-size: 80%; word-spacing: 0.1rem;
+}
+
+/* MEDIA QUERIES */
+
+@media all and (max-width: 1280px) {
+    header .button-container .buttons button span {
+        display: none;
+    }
+    .btn i {
+        margin-right: 0;
+    }
+    header .list-container {
+        padding: 0.25rem 2.5rem 0.5rem 2.5rem;
+    }
+    section .content.form form {
+        width: 100%;
+    }
+    #edit-icon-input .icon, #add-icon-input .icon {
+        padding: 0.75rem 0.5rem; margin: 0.25rem 0.35rem;
+    }
+}
+    
+
+@media all and (max-width: 1000px) {
+    section.first {
+        margin: 7rem 0 4.5rem 0; 
+    }
+    header .button-container {
+        flex-direction: column;
+    }
+    header .button-container .buttons {
+        width: 100%;
+    }
+    header .list-container {
+        padding: 0.25rem 0 0.5rem 0;
+    }
+    section .content.form form input.input-name {
+        width: 100%; margin: 0.5rem 0 2rem 0;
+    }
+}
+
+@media all and (max-width: 420px) {
+    .popup-overlay .popup-box-container {
+        width: 90%; padding: 0 0.5rem;
+    }
+}

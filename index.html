@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <!-- JS -->
+    <script src="assets/js/foodpicker.js" defer></script>
+    <title>FoodPicker</title>
+</head>
+<body>
+    <div class="popup-overlay" id="popup">
+        <div class="popup-box-container">
+            <div class="popup-icon-container" id="popup-icon-container">
+                <i class="fa-solid fa-circle-check" id="popup-success-icon"></i>
+                <i class="fa-solid fa-circle-exclamation" id="popup-warning-icon"></i>
+                <i class="fa-solid fa-circle-xmark" id="popup-error-icon"></i>
+            </div>
+            <div class="popup-message-container">
+                <span id="popup-title">Thank you!</span>
+                <p id="popup-description">Your purchase was successful</p>
+            </div>
+            <div id="popup-button-container">
+                <button class="btn solid">Okay!</button>
+            </div>
+            
+        </div>
+    </div>
+    <header>
+        <div class="button-container">
+            <a href="foodpicker.html" class="logo" title="Navigate to FoodPicker via logo.">FOOD<span>PICKER</span></a>
+            <div class="buttons">
+                <button onclick="NavigateToHome()" class="btn solid" title="Navigate to Home."><i class="fa-solid fa-house"></i> <span>Home</span></button>
+                <button onclick="TryOpenFoodAdder()" class="btn solid" title="Add a new food list."><i class="fa-solid fa-plus"></i> <span>Add</span></button>
+                <button onclick="TryOpenFoodEditor()" class="btn transparent" title="Edit current food list."><i class="fa-solid fa-pen-to-square"></i> <span>Edit</span></button>
+                <div id="nav-menu-btn" class="fa-solid fa-bars fa-xl" title="Open list."></div>
+            </div>
+        </div>
+        <nav id="nav-dropdown" class="list-container"></nav>
+        <script>
+            let toggleBtn = document.querySelector("#nav-menu-btn");
+            let dropdown = document.querySelector("#nav-dropdown");
+
+            toggleBtn.addEventListener("click", () => {
+            toggleBtn.classList.toggle("fa-times");
+            dropdown.classList.toggle("active");
+            });
+
+            window.onscroll = () => {
+                toggleBtn.classList.remove("fa-times");
+                dropdown.classList.remove("active");
+            };
+
+            document.onclick = function (e) {
+                if (e.target.id !== 'nav-menu-btn') {
+                    toggleBtn.classList.remove("fa-times");
+                    dropdown.classList.remove("active");
+                };
+            };
+        </script>
+    </header>
+
+    <section id="food-picker" class="first active">
+        <div class="header">
+            <h3 id="list-name"><i class="fa-solid fa-burger"></i> Name</h3>
+            <p id="list-desc">This is the description.</p>
+        </div>
+        <div class="content">
+            <span>And the winner is:</span>
+            <span id="list-result">...</span>
+        </div>
+        <div class="button-container">
+            <button onclick="GetRandomFood()" class="btn solid"><i class="fa-solid fa-dice"></i> Pick Item</button>
+        </div>
+    </section>
+
+    <section id="food-editor" class="">
+        <div class="header">
+            <h3>Edit Food List</h3>
+            <p>Here you can edit your selected food list.</p>
+        </div>
+        <div class="content form">
+            <form>
+                <label for="edit-name-input">List Name:</label>
+                <input type="text" class="input-name" id="edit-name-input" placeholder="E.g. Breakfast" minlength="1" maxlength="25" autocomplete="off">
+                <label for="edit-icon-input">List Icon:</label>
+                <div id="edit-icon-input" class="icon-container"></div>
+                <label for="edit-desc-input">List Description:</label>
+                <textarea name="edit-desc-input" id="edit-desc-input" cols="30" rows="3" placeholder="E.g. This list contains ..." minlength="1" maxlength="250" autocomplete="off"></textarea>
+                <label for="edit-list-input">List Items:</label>
+                <textarea name="edit-list-input" id="edit-list-input" cols="30" rows="10" placeholder="E.g. Eggs, Toast, Bacon, ..." autocomplete="off"></textarea>
+            </form>
+        </div>
+        <div class="button-container">
+            <button onclick="TryCloseFoodEditor()" class="btn transparent" title="Quit editor."><i class="fa-solid fa-xmark"></i> Cancel</button>
+            <button onclick="OpenDoublePopup('Warning', 'Warning!', 'Do you really want to delete this food list?', 'Cancel', 'Delete', 'ClosePopup()', 'TryDeleteList()')" class="btn transparent" title="Delete this list."><i class="fa-solid fa-trash"></i> Delete</button>
+            
+            <button onclick="TryApplyChanges()" class="btn solid" title="Apply changes."><i class="fa-solid fa-check"></i> Apply</button>
+        </div>
+    </section>
+
+    <section id="food-adder" class="">
+        <div class="header">
+            <h3>Add Food List</h3>
+            <p>Here you can add a new food list.</p>
+        </div>
+        <div class="content form">
+            <form>
+                <label for="add-name-input">List Name:</label>
+                <input type="text" class="input-name" id="add-name-input" placeholder="E.g. Breakfast" minlength="1" maxlength="25" autocomplete="off">
+                <label for="add-icon-input">List Icon:</label>
+                <div id="add-icon-input" class="icon-container"></div>
+                <label for="add-desc-input">List Description:</label>
+                <textarea name="add-desc-input" id="add-desc-input" cols="30" rows="3" placeholder="E.g. This list contains ..." minlength="1" maxlength="250" autocomplete="off"></textarea>
+                <label for="add-list-input">List Items:</label>
+                <textarea name="add-list-input" id="add-list-input" cols="30" rows="10" placeholder="E.g. Eggs, Toast, Bacon, ..." autocomplete="off"></textarea>
+            </form>
+        </div>
+        <div class="button-container">
+            <button onclick="TryCloseFoodAdder()" class="btn transparent" title="Cancel."><i class="fa-solid fa-arrow-rotate-left"></i> Cancel</button>
+            <button onclick="TryAddNewList()" class="btn solid" title="Add List."><i class="fa-solid fa-plus"></i> Add New List</button>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <h3>FOOD<span>PICKER</span></h3>
+            <p>You're hungry but you don't know what you should eat? No problem! Simply add a list of your favourite food and <b>FOOD</b><span>PICKER</span> will make the decision.</p>
+            <ul class="links">
+                <li><a href="https://www.facebook.com/julian.fiedler.180/" target="_blank" title="Link to my Facebook account."><i class="fa-brands fa-facebook"></i></a></li>
+                <li><a href="https://www.instagram.com/julian.3105/" target="_blank" title="Link to my Instagram account."><i class="fa-brands fa-instagram"></i></a></li>
+                <li><a href="https://www.youtube.com/@drischi2379" target="_blank" title="Link to my YouTube channel."><i class="fa-brands fa-youtube"></i></a></li>
+                <li><a href="mailto:j.fiedler2002@outlook.com" target="_blank" title="Link to my E-Mail adress."><i class="fa-solid fa-envelope"></i></a></li>
+            </ul>
+        </div>
+        <div class="footer-bottom">
+            <p>Copyright &copy; 2022 jPICS. Designed by <span>jPICS</span></p>
+        </div>
+    </footer>
+</body>
+</html>
